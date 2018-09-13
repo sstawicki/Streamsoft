@@ -3,18 +3,20 @@ package com.streamsoft.exchange.Currency.exchange.domain;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.TypeAlias;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
 @Getter
-@AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "nbp_table")
+@Table(name = "nbp_table")
 public class NbpTable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private Long id;
     @Column(name = "table_cur")
     private String table;
@@ -34,4 +36,5 @@ public class NbpTable {
         this.effectiveDate = effectiveDate;
         this.rates = rates;
     }
+
 }

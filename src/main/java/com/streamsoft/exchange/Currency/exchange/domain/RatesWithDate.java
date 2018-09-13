@@ -6,13 +6,12 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-
+import java.time.LocalDate;
 
 @NoArgsConstructor
 @Getter
-@Entity(name = "rates")
-@Table(name = "rates")
-public class Rates {
+@Entity(name = "rates_with_date")
+public class RatesWithDate {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
@@ -25,15 +24,14 @@ public class Rates {
     private BigDecimal bid;
     @Column(name = "ask")
     private BigDecimal ask;
-    @ManyToOne
-    @JoinColumn(name = "nbp_table_id")
-    private NbpTable nbpTable;
+    @Column(name = "effectiveDate")
+    private LocalDate effectiveDate;
 
-    public Rates(String currency, String code, BigDecimal bid, BigDecimal ask) {
-
+    public RatesWithDate(String currency, String code, BigDecimal bid, BigDecimal ask, LocalDate effectiveDate) {
         this.currency = currency;
         this.code = code;
         this.bid = bid;
         this.ask = ask;
+        this.effectiveDate = effectiveDate;
     }
 }

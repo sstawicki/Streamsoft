@@ -36,6 +36,12 @@ public class NbpMapper {
                 .collect(Collectors.toList());
     }
 
+    public List<NbpTableDto> mapToListNbpTableDto(final List<NbpTable> nbpTables){
+        return nbpTables.stream()
+                .map(t -> new NbpTableDto(t.getTable(), t.getNo(), t.getTradingDate(), t.getEffectiveDate(), mapToRatesDtoList(t.getRates())))
+                .collect(Collectors.toList());
+    }
+
     public NbpTableDto mapToNbpTableDto(final NbpTable nbpTable) {
         return new NbpTableDto(nbpTable.getTable(), nbpTable.getNo(), nbpTable.getTradingDate(), nbpTable.getEffectiveDate(), mapToRatesDtoList(nbpTable.getRates()));
     }
