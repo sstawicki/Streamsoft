@@ -9,10 +9,7 @@ import com.streamsoft.exchange.Currency.exchange.service.DbService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,6 +17,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
 @RequestMapping("/")
+@CrossOrigin(origins = "*")
 public class NbpController {
     @Autowired
     private NbpClient nbpClient;
@@ -38,10 +36,6 @@ public class NbpController {
     public ResponseEntity<?> saveCurrency(@RequestBody NbpTableDto nbpTableDto) {
         try {
             NbpTable nbpTable = dbService.saveNbpTable(nbpMapper.mapToNbpTable(nbpTableDto));
-            nbpTable.getRates().stream()
-                    .forEach(t -> dbService.saveRates(t));
-            nbpTable.getRates().stream()
-                    .forEach(t -> dbService.saveRatesWithDate(t,nbpTable));
             return new ResponseEntity<>(nbpTable, HttpStatus.OK);
         } catch (Exception ex) {
             return new ResponseEntity<>("Your scores are in databases", HttpStatus.BAD_REQUEST);

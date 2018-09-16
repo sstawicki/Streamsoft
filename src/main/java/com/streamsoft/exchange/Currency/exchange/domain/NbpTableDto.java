@@ -23,4 +23,5 @@ public class NbpTableDto {
     private LocalDate effectiveDate;
     @JsonProperty("rates")
     private List<RatesDto> rates;
+
 }

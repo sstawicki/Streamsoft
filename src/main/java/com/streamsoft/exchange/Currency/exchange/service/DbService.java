@@ -22,15 +22,16 @@ public class DbService {
     @Autowired
     private RatesWithDateRepository ratesWithDateRepository;
 
-    public NbpTable saveNbpTable(final NbpTable nbpTable) {
+    public NbpTable saveNbpTable (final NbpTable nbpTable) throws Exception {
         Optional<NbpTable> nbpTableIsExist = nbpTableRepository.findByEffectiveDate(nbpTable.getEffectiveDate());
         if (nbpTableIsExist.isPresent()) {
-            return null;
+             throw new Exception("Your scores are in databases");
         } else {
             NbpTable nbpTable1Save = nbpTableRepository.save(nbpTable);
-         //   List<Rates> rates = nbpTable.getRates();
-           // rates.stream()
-            //        .forEach(t -> saveRates(t));
+            nbpTable.getRates().stream()
+                    .forEach(t -> saveRates(t));
+            nbpTable.getRates().stream()
+                    .forEach(t -> saveRatesWithDate(t,nbpTable));
             return nbpTable1Save;
         }
     }
