@@ -3,6 +3,7 @@ package com.streamsoft.exchange.Currency.exchange.domain;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -10,6 +11,7 @@ import java.math.BigDecimal;
 
 @NoArgsConstructor
 @Getter
+@Setter
 @Entity(name = "rates")
 @Table(name = "rates")
 public class Rates {
@@ -35,5 +37,13 @@ public class Rates {
         this.code = code;
         this.bid = bid;
         this.ask = ask;
+    }
+
+    public Rates(String currency, String code, BigDecimal bid, BigDecimal ask, NbpTable nbpTable) {
+        this.currency = currency;
+        this.code = code;
+        this.bid = bid;
+        this.ask = ask;
+        this.nbpTable = nbpTable;
     }
 }

@@ -27,20 +27,24 @@ public class DbService {
         if (nbpTableIsExist.isPresent()) {
              throw new Exception("Your scores are in databases");
         } else {
-            NbpTable nbpTable1Save = nbpTableRepository.save(nbpTable);
-            nbpTable.getRates().stream()
-                    .forEach(t -> saveRates(t));
-            nbpTable.getRates().stream()
+            List<Rates> ratesList = nbpTable.getRates();
+            nbpTableRepository.save(nbpTable);
+            ratesList.stream()
+                    .forEach(t -> saveRates(t,nbpTable));
+            ratesList.stream()
                     .forEach(t -> saveRatesWithDate(t,nbpTable));
-            return nbpTable1Save;
+            ratesList.stream()
+                      .forEach(t -> t.setNbpTable(null));
+            return nbpTable;
         }
     }
 
-    public Rates saveRates(final Rates rates) {
+    public Rates saveRates(final Rates rates, final NbpTable nbpTable) {
+        rates.setNbpTable(nbpTable);
         return ratesRepository.save(rates);
     }
 
-    public RatesWithDate saveRatesWithDate(final Rates rates, final NbpTable nbpTable){
+    private RatesWithDate saveRatesWithDate(final Rates rates, final NbpTable nbpTable){
         return ratesWithDateRepository.save(new RatesWithDate(rates.getCurrency(), rates.getCode(), rates.getBid(), rates.getAsk(), nbpTable.getEffectiveDate()));
     }
 }

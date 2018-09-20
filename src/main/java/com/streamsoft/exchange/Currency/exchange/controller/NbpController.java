@@ -3,7 +3,6 @@ package com.streamsoft.exchange.Currency.exchange.controller;
 import com.streamsoft.exchange.Currency.exchange.config.NbpClient;
 import com.streamsoft.exchange.Currency.exchange.domain.NbpTable;
 import com.streamsoft.exchange.Currency.exchange.domain.NbpTableDto;
-import com.streamsoft.exchange.Currency.exchange.domain.Rates;
 import com.streamsoft.exchange.Currency.exchange.mapper.NbpMapper;
 import com.streamsoft.exchange.Currency.exchange.service.DbService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,15 +27,14 @@ public class NbpController {
 
     @RequestMapping(method = RequestMethod.GET, value = "get-currencies")
     public List<NbpTableDto> getRates() {
-        List<NbpTable> nbpTables = nbpMapper.mapToNbpTable(nbpClient.getNbpBoards());
+        List<NbpTable> nbpTables = nbpMapper.mapToListNbpTable(nbpClient.getNbpBoards());
         return nbpMapper.mapToListNbpTableDto(nbpTables);
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "save", consumes =  APPLICATION_JSON_VALUE)
     public ResponseEntity<?> saveCurrency(@RequestBody NbpTableDto nbpTableDto) {
         try {
-            NbpTable nbpTable = dbService.saveNbpTable(nbpMapper.mapToNbpTable(nbpTableDto));
-            return new ResponseEntity<>(nbpTable, HttpStatus.OK);
+            return new ResponseEntity<>(nbpMapper.mapToNbpTableDto(dbService.saveNbpTable(nbpMapper.mapToNbpTable(nbpTableDto))), HttpStatus.OK);
         } catch (Exception ex) {
             return new ResponseEntity<>("Your scores are in databases", HttpStatus.BAD_REQUEST);
         }

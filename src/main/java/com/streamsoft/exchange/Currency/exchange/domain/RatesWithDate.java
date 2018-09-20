@@ -1,6 +1,5 @@
 package com.streamsoft.exchange.Currency.exchange.domain;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

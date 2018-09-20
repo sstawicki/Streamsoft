@@ -1,9 +1,9 @@
 package com.streamsoft.exchange.Currency.exchange.domain;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.TypeAlias;
+import lombok.Setter;
+
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -11,6 +11,7 @@ import java.util.List;
 
 @Getter
 @NoArgsConstructor
+@Setter
 @Entity(name = "nbp_table")
 @Table(name = "nbp_table")
 public class NbpTable {

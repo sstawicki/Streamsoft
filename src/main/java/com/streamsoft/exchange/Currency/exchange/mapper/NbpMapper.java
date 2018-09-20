@@ -12,12 +12,7 @@ import java.util.stream.Collectors;
 
 @Component
 public class NbpMapper {
-    public Rates mapToRates(final RatesDto ratesDto) {
-            return new Rates(ratesDto.getCurrency(), ratesDto.getCode(), ratesDto.getBid(), ratesDto.getAsk());
-    }
-    public RatesDto mapToRatesDto(final Rates rates) {
-        return new RatesDto(rates.getCurrency(), rates.getCode(), rates.getBid(), rates.getAsk());
-    }
+
     public List<Rates> mapToListRates(final List<RatesDto> ratesDto) {
         return ratesDto.stream()
                 .map(t -> new Rates(t.getCurrency(), t.getCode(), t.getBid(), t.getAsk()))
@@ -30,7 +25,7 @@ public class NbpMapper {
                 .collect(Collectors.toList());
     }
 
-    public List<NbpTable> mapToNbpTable(final List<NbpTableDto> nbpTableDto) {
+    public List<NbpTable> mapToListNbpTable(final List<NbpTableDto> nbpTableDto) {
         return nbpTableDto.stream()
                 .map(t -> new NbpTable(t.getTable(), t.getNo(), t.getTradingDate(), t.getEffectiveDate(), mapToListRates(t.getRates())))
                 .collect(Collectors.toList());
@@ -42,12 +37,12 @@ public class NbpMapper {
                 .collect(Collectors.toList());
     }
 
-    public NbpTableDto mapToNbpTableDto(final NbpTable nbpTable) {
-        return new NbpTableDto(nbpTable.getTable(), nbpTable.getNo(), nbpTable.getTradingDate(), nbpTable.getEffectiveDate(), mapToRatesDtoList(nbpTable.getRates()));
-    }
 
     public NbpTable mapToNbpTable(final NbpTableDto nbpTableDto) {
         return new NbpTable(nbpTableDto.getTable(), nbpTableDto.getNo(), nbpTableDto.getTradingDate(), nbpTableDto.getEffectiveDate(), mapToListRates(nbpTableDto.getRates()));
     }
 
+    public NbpTableDto mapToNbpTableDto(final NbpTable nbpTable) {
+        return new NbpTableDto(nbpTable.getTable(), nbpTable.getNo(), nbpTable.getTradingDate(), nbpTable.getEffectiveDate(), mapToRatesDtoList(nbpTable.getRates()));
+    }
 }
